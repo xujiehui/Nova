@@ -40,6 +40,7 @@ pnpm install:vscode-deps
 pnpm build:vscode-fast
 pnpm smoke:vscode-start
 pnpm acceptance:vscode-model
+pnpm website:dev
 pnpm start:vscode -- --disable-gpu
 ```
 
@@ -88,6 +89,16 @@ Use `Nova: Create Model Profile` to add another provider/model combination, then
 Run `Nova: Test Model Connection` before chatting to verify the active profile's base URL, model ID, and API key.
 
 The older command-palette setup flow remains available as `Nova: Configure Model (Quick Pick)` for keyboard-first workflows.
+
+## Website
+
+The promotional website lives in `website/` as a static site. Preview it locally with:
+
+```bash
+pnpm website:dev
+```
+
+Then open `http://localhost:4173/website/`.
 
 ## Inline Completion
 

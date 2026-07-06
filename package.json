@@ -17,6 +17,7 @@
     "acceptance:vscode-model": "tsx scripts/acceptance-vscode-model.ts",
     "build:extension": "pnpm --filter nova-ai build",
     "watch:extension": "pnpm --filter nova-ai watch",
+    "website:dev": "python3 -m http.server 4173 --directory .",
     "typecheck": "tsc -b",
     "test": "pnpm typecheck"
   },

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Nova 是面向开发者的 AI 原生代码编辑器，保留 VS Code 的成熟工作台，并把可控模型路由、仓库上下文、规则和 Agent 工作流放进同一个编码环境。"
+    />
+    <title>Nova | AI 原生代码编辑器</title>
+    <link rel="icon" href="../extensions/nova-ai/media/nova-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Nova 首页">
+        <img src="../extensions/nova-ai/media/nova-icon.svg" alt="" />
+        <span>Nova</span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#models">模型</a>
+        <a href="#agent">Agent</a>
+        <a href="#workflow">工作流</a>
+        <a href="#start">开始</a>
+      </nav>
+      <a class="header-action" href="#start">获取 Nova</a>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">AI-native coding workspace</p>
+          <h1 id="hero-title">Nova</h1>
+          <p class="hero-subtitle">
+            一个基于 VS Code 工作台的 AI 原生代码编辑器。熟悉的编辑体验，配上可自定义模型路由、
+            仓库上下文、规则系统和受控 Agent 工作流。
+          </p>
+          <div class="hero-actions" aria-label="主要操作">
+            <a class="button primary" href="#start">
+              <span aria-hidden="true">↧</span>
+              <span>本地启动</span>
+            </a>
+            <a class="button secondary" href="#workflow">
+              <span aria-hidden="true">⌘</span>
+              <span>查看能力</span>
+            </a>
+          </div>
+          <dl class="hero-metrics" aria-label="Nova 当前能力">
+            <div>
+              <dt>OpenAI-compatible</dt>
+              <dd>统一请求协议</dd>
+            </div>
+            <div>
+              <dt>Local-ready</dt>
+              <dd>支持 Ollama / LM Studio</dd>
+            </div>
+            <div>
+              <dt>Review-first</dt>
+              <dd>计划、预览、再应用</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="hero-visual" aria-label="Nova 产品界面预览">
+          <img src="./assets/nova-workspace-preview.png" alt="Nova 编辑器界面，显示代码、AI 聊天、模型配置和 Agent 计划" />
+        </figure>
+      </section>
+
+      <section class="intro-band" aria-label="产品定位">
+        <p>
+          Nova 不要求团队被单一模型或云厂商锁住。你可以在同一个编辑器里切换托管模型、本地模型和企业网关，
+          同时保留 VS Code 的扩展生态、语言服务、终端和源码管理。
+        </p>
+      </section>
+
+      <section class="feature-grid" id="models" aria-labelledby="models-title">
+        <div class="section-heading">
+          <p class="eyebrow">Model routing</p>
+          <h2 id="models-title">把模型选择权交回给开发者</h2>
+        </div>
+        <article class="feature-card">
+          <div class="feature-icon">01</div>
+          <h3>多模型 Profile</h3>
+          <p>为 OpenAI、OpenRouter、DeepSeek、Qwen、Ollama、LM Studio 或自定义网关保存独立配置。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">02</div>
+          <h3>企业网关友好</h3>
+          <p>自定义非保留请求头和请求体字段，适配租户、项目、路由和生成参数等内部策略。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">03</div>
+          <h3>密钥安全存储</h3>
+          <p>API key 通过 VS Code SecretStorage 按模型配置保存，本地模型也可以无密钥运行。</p>
+        </article>
+      </section>
+
+      <section class="split-section" id="agent" aria-labelledby="agent-title">
+        <div class="section-heading">
+          <p class="eyebrow">Agent workflows</p>
+          <h2 id="agent-title">让 AI 改代码，也让你保持控制</h2>
+          <p>
+            Nova 的 Agent 先进行受限只读检查，再生成结构化计划。每一步都有计划文件、差异预览和运行记录，
+            适合小到中等规模的多文件修改。
+          </p>
+        </div>
+        <div class="workflow-panel" aria-label="Agent 工作流步骤">
+          <div class="workflow-step is-active">
+            <span>1</span>
+            <strong>读取上下文</strong>
+            <p>只允许搜索和读取工作区内的安全路径。</p>
+          </div>
+          <div class="workflow-step">
+            <span>2</span>
+            <strong>生成计划</strong>
+            <p>写入 `.nova/plans/`，先审阅再进入修改。</p>
+          </div>
+          <div class="workflow-step">
+            <span>3</span>
+            <strong>预览差异</strong>
+            <p>每个文件都需要确认，降低误写风险。</p>
+          </div>
+          <div class="workflow-step">
+            <span>4</span>
+            <strong>记录结果</strong>
+            <p>运行报告保存到 `.nova/runs/` 方便追踪。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="capability-band" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <p class="eyebrow">Coding surface</p>
+          <h2 id="workflow-title">熟悉的编辑器，内建的 AI 工作台</h2>
+        </div>
+        <div class="capability-list">
+          <article>
+            <h3>仓库感知聊天</h3>
+            <p>结合当前文件、工作区规则和轻量代码检索，把问题放进真实项目上下文。</p>
+          </article>
+          <article>
+            <h3>内联补全</h3>
+            <p>使用当前激活模型，根据光标附近的前后缀生成短插入建议。</p>
+          </article>
+          <article>
+            <h3>规则系统</h3>
+            <p>读取 `.nova/rules.md`、`.cursorrules` 和 Cursor 规则，让团队约定进入模型提示。</p>
+          </article>
+          <article>
+            <h3>模型连接测试</h3>
+            <p>从侧边栏直接验证 base URL、模型 ID、密钥和自定义参数是否可用。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="start-section" id="start" aria-labelledby="start-title">
+        <div class="section-heading">
+          <p class="eyebrow">Run locally</p>
+          <h2 id="start-title">从源码启动 Nova</h2>
+          <p>当前项目以 fork overlay 方式开发，先准备依赖，再把 Nova 扩展和产品配置应用到 VS Code checkout。</p>
+        </div>
+        <div class="terminal-card" role="region" aria-label="本地启动命令">
+          <div class="terminal-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>pnpm install
+pnpm setup:node
+pnpm build:extension
+pnpm bootstrap:vscode
+pnpm apply:overlay
+pnpm start:vscode -- --disable-gpu</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="#top" aria-label="Nova 首页">
+        <img src="../extensions/nova-ai/media/nova-icon.svg" alt="" />
+        <span>Nova</span>
+      </a>
+      <p>AI-native coding workspace with user-controlled models.</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
