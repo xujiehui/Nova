@@ -1,0 +1,40 @@
+{
+  "name": "nova",
+  "version": "1.0.0",
+  "description": "VS Code fork overlay for Nova, an AI-native coding workspace with user-configurable models.",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "bootstrap:vscode": "tsx scripts/bootstrap-vscode.ts",
+    "setup:node": "tsx scripts/setup-node.ts",
+    "apply:overlay": "tsx scripts/apply-overlay.ts",
+    "verify:overlay": "tsx scripts/verify-overlay.ts",
+    "check:vscode-env": "tsx scripts/check-vscode-env.ts",
+    "install:vscode-deps": "tsx scripts/install-vscode-deps.ts",
+    "build:vscode-fast": "tsx scripts/build-vscode-fast.ts",
+    "start:vscode": "tsx scripts/start-vscode.ts",
+    "smoke:vscode-start": "tsx scripts/smoke-vscode-start.ts",
+    "acceptance:vscode-model": "tsx scripts/acceptance-vscode-model.ts",
+    "build:extension": "pnpm --filter nova-ai build",
+    "watch:extension": "pnpm --filter nova-ai watch",
+    "typecheck": "tsc -b",
+    "test": "pnpm typecheck"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.7.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3"
+  }
+}

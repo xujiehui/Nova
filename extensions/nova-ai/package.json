@@ -1,0 +1,339 @@
+{
+  "name": "nova-ai",
+  "displayName": "Nova AI",
+  "description": "Built-in AI pair programmer for the Nova VS Code fork.",
+  "version": "0.1.0",
+  "publisher": "nova",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": ["AI", "Other"],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:nova.chatView",
+    "onView:nova.agentTasksView",
+    "onView:nova.modelConfigView",
+    "onView:nova.rulesView",
+    "onCommand:nova.setup",
+    "onCommand:nova.openChat",
+    "onCommand:nova.explainFile",
+    "onCommand:nova.generateTests",
+    "onCommand:nova.runAgent",
+    "onCommand:nova.editSelection",
+    "onCommand:nova.configureModel",
+    "onCommand:nova.configureModelQuickPick",
+    "onCommand:nova.openRules",
+    "onCommand:nova.openAgentTasks",
+    "onCommand:nova.setApiKey",
+    "onCommand:nova.pickModelProfile",
+    "onCommand:nova.createModelProfile",
+    "onCommand:nova.editModelProfile",
+    "onCommand:nova.deleteModelProfile",
+    "onCommand:nova.testModelConnection",
+    "onCommand:nova.internal.acceptance",
+    "onCommand:nova.internal.configureProfile",
+    "onCommand:nova.internal.agentAcceptance",
+    "onCommand:nova.internal.streamAcceptance",
+    "onCommand:nova.internal.inlineAcceptance",
+    "onCommand:nova.internal.setupStatus",
+    "onCommand:nova.internal.modelConfigAcceptance",
+    "onCommand:nova.internal.rulesAcceptance",
+    "onCommand:nova.internal.agentTasksAcceptance"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "nova.setup",
+        "title": "Nova: Setup",
+        "category": "Nova",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "nova.openChat",
+        "title": "Nova: Open Chat",
+        "category": "Nova",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "nova.explainFile",
+        "title": "Nova: Explain Current File",
+        "category": "Nova",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "nova.generateTests",
+        "title": "Nova: Generate Tests",
+        "category": "Nova",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "nova.runAgent",
+        "title": "Nova: Run Agent",
+        "category": "Nova",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "nova.openAgentTasks",
+        "title": "Nova: Open Agent Tasks",
+        "category": "Nova",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "nova.editSelection",
+        "title": "Nova: Edit Selection or File",
+        "category": "Nova",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "nova.setApiKey",
+        "title": "Nova: Set Model API Key",
+        "category": "Nova",
+        "icon": "$(key)"
+      },
+      {
+        "command": "nova.configureModel",
+        "title": "Nova: Configure Model",
+        "category": "Nova",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "nova.configureModelQuickPick",
+        "title": "Nova: Configure Model (Quick Pick)",
+        "category": "Nova",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "nova.openRules",
+        "title": "Nova: Open Rules",
+        "category": "Nova",
+        "icon": "$(book)"
+      },
+      {
+        "command": "nova.pickModelProfile",
+        "title": "Nova: Switch Model Profile",
+        "category": "Nova",
+        "icon": "$(server-process)"
+      },
+      {
+        "command": "nova.createModelProfile",
+        "title": "Nova: Create Model Profile",
+        "category": "Nova",
+        "icon": "$(add)"
+      },
+      {
+        "command": "nova.editModelProfile",
+        "title": "Nova: Edit Active Model Profile",
+        "category": "Nova",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "nova.deleteModelProfile",
+        "title": "Nova: Delete Model Profile",
+        "category": "Nova",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "nova.testModelConnection",
+        "title": "Nova: Test Model Connection",
+        "category": "Nova",
+        "icon": "$(plug)"
+      }
+    ],
+    "configuration": {
+      "title": "Nova AI",
+      "properties": {
+        "nova.modelBaseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "OpenAI-compatible model base URL. Nova appends /chat/completions when needed."
+        },
+        "nova.modelId": {
+          "type": "string",
+          "default": "gpt-4.1",
+          "description": "Model identifier sent to the configured model provider."
+        },
+        "nova.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "API key for the configured model provider. Store it in User settings or an encrypted settings sync backend."
+        },
+        "nova.requiresApiKey": {
+          "type": "boolean",
+          "default": true,
+          "description": "Require an API key for the default model profile. Disable this for local OpenAI-compatible servers such as Ollama or LM Studio."
+        },
+        "nova.requestHeaders": {
+          "type": "string",
+          "default": "{}",
+          "markdownDescription": "Optional JSON object of extra HTTP headers sent to the active OpenAI-compatible model endpoint. Nova ignores reserved headers such as `Authorization`, `Content-Type`, `Content-Length`, and `Host`."
+        },
+        "nova.requestBody": {
+          "type": "string",
+          "default": "{}",
+          "markdownDescription": "Optional JSON object of extra request body fields sent to the active OpenAI-compatible model endpoint. Nova ignores reserved fields such as `model`, `messages`, `stream`, and `temperature`."
+        },
+        "nova.temperature": {
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Sampling temperature for Nova AI requests."
+        },
+        "nova.systemPrompt": {
+          "type": "string",
+          "default": "You are Nova, an expert AI pair programmer inside a VS Code fork. Be concise, practical, and grounded in the active workspace.",
+          "description": "System prompt sent before workspace rules, user prompt, and file context."
+        },
+        "nova.inlineCompletion.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Nova inline completions powered by the active model profile."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nova",
+          "title": "Nova",
+          "icon": "media/nova-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "nova": [
+        {
+          "id": "nova.chatView",
+          "name": "Chat"
+        },
+        {
+          "id": "nova.agentTasksView",
+          "name": "Agent Tasks"
+        },
+        {
+          "id": "nova.modelConfigView",
+          "name": "Models"
+        },
+        {
+          "id": "nova.rulesView",
+          "name": "Rules"
+        }
+      ]
+    },
+    "walkthroughs": [
+      {
+        "id": "nova.setup",
+        "title": "Get Started with Nova",
+        "description": "Connect your model provider and start using Nova chat, inline completion, edits, and agent workflows.",
+        "steps": [
+          {
+            "id": "nova.setup.model",
+            "title": "Connect a model",
+            "description": "Create a provider profile, store your API key securely, and route Nova through your own model endpoint.",
+            "media": {
+              "markdown": "media/setup-model.md"
+            },
+            "completionEvents": ["onCommand:nova.configureModel"]
+          },
+          {
+            "id": "nova.setup.test",
+            "title": "Test the connection",
+            "description": "Verify the active model profile before chatting or editing.",
+            "media": {
+              "markdown": "media/setup-test.md"
+            },
+            "completionEvents": ["onCommand:nova.testModelConnection"]
+          },
+          {
+            "id": "nova.setup.chat",
+            "title": "Open Nova Chat",
+            "description": "Use Nova Chat, Agent, edits, and inline completions with the active model profile.",
+            "media": {
+              "markdown": "media/setup-chat.md"
+            },
+            "completionEvents": ["onCommand:nova.openChat"]
+          }
+        ]
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "nova.editSelection",
+          "group": "navigation@49"
+        },
+        {
+          "command": "nova.explainFile",
+          "group": "navigation@50"
+        },
+        {
+          "command": "nova.generateTests",
+          "group": "navigation@51"
+        },
+        {
+          "command": "nova.runAgent",
+          "group": "navigation@52"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "nova.setup"
+        },
+        {
+          "command": "nova.editSelection"
+        },
+        {
+          "command": "nova.setApiKey"
+        },
+        {
+          "command": "nova.configureModel"
+        },
+        {
+          "command": "nova.openRules"
+        },
+        {
+          "command": "nova.openAgentTasks"
+        },
+        {
+          "command": "nova.pickModelProfile"
+        },
+        {
+          "command": "nova.createModelProfile"
+        },
+        {
+          "command": "nova.editModelProfile"
+        },
+        {
+          "command": "nova.deleteModelProfile"
+        },
+        {
+          "command": "nova.testModelConnection"
+        },
+        {
+          "command": "nova.openChat"
+        },
+        {
+          "command": "nova.explainFile"
+        },
+        {
+          "command": "nova.generateTests"
+        },
+        {
+          "command": "nova.runAgent"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "@types/vscode": "^1.100.0",
+    "typescript": "^6.0.3"
+  }
+}

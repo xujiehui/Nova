@@ -1,0 +1,16 @@
+{
+  "nameShort": "Nova",
+  "nameLong": "Nova",
+  "applicationName": "nova",
+  "dataFolderName": ".nova",
+  "win32MutexName": "nova",
+  "licenseName": "MIT",
+  "licenseUrl": "https://opensource.org/licenses/MIT",
+  "serverApplicationName": "nova-server",
+  "serverDataFolderName": ".nova-server",
+  "tunnelApplicationName": "nova-tunnel",
+  "urlProtocol": "nova",
+  "extensionEnabledApiProposals": {
+    "nova.nova-ai": []
+  }
+}
