@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Nova 是面向开发者的 AI 原生代码编辑器，保留 VS Code 的成熟工作台，并把可控模型路由、仓库上下文、规则和 Agent 工作流放进同一个编码环境。"
+      content="Nova 是基于 VS Code fork 的 AI 原生代码工作台，提供可控模型 Profile、仓库上下文、规则系统、Agent 计划和跨平台桌面构建流程。"
     />
     <title>Nova | AI 原生代码编辑器</title>
     <link rel="icon" href="../extensions/nova-ai/media/nova-icon.svg" type="image/svg+xml" />
@@ -21,6 +21,8 @@
         <a href="#models">模型</a>
         <a href="#agent">Agent</a>
         <a href="#workflow">工作流</a>
+        <a href="#release">发布</a>
+        <a href="#roadmap">路线图</a>
         <a href="#start">开始</a>
       </nav>
       <a class="header-action" href="#start">获取 Nova</a>
@@ -32,8 +34,8 @@
           <p class="eyebrow">AI-native coding workspace</p>
           <h1 id="hero-title">Nova</h1>
           <p class="hero-subtitle">
-            一个基于 VS Code 工作台的 AI 原生代码编辑器。熟悉的编辑体验，配上可自定义模型路由、
-            仓库上下文、规则系统和受控 Agent 工作流。
+            面向开发者和团队的 AI 原生代码工作台。Nova 保留 VS Code 的编辑器和扩展生态，
+            再把模型 Profile、仓库上下文、规则系统、Agent 计划和桌面构建流程整合进同一个产品。
           </p>
           <div class="hero-actions" aria-label="主要操作">
             <a class="button primary" href="#start">
@@ -47,16 +49,16 @@
           </div>
           <dl class="hero-metrics" aria-label="Nova 当前能力">
             <div>
-              <dt>OpenAI-compatible</dt>
-              <dd>统一请求协议</dd>
+              <dt>VS Code fork</dt>
+              <dd>成熟编辑器底座</dd>
             </div>
             <div>
-              <dt>Local-ready</dt>
-              <dd>支持 Ollama / LM Studio</dd>
+              <dt>Bring your model</dt>
+              <dd>托管、本地、企业网关</dd>
             </div>
             <div>
-              <dt>Review-first</dt>
-              <dd>计划、预览、再应用</dd>
+              <dt>Desktop-ready</dt>
+              <dd>跨平台桌面归档</dd>
             </div>
           </dl>
         </div>
@@ -68,8 +70,8 @@
 
       <section class="intro-band" aria-label="产品定位">
         <p>
-          Nova 不要求团队被单一模型或云厂商锁住。你可以在同一个编辑器里切换托管模型、本地模型和企业网关，
-          同时保留 VS Code 的扩展生态、语言服务、终端和源码管理。
+          Nova 的方向很简单：不要把 AI 编码体验绑定到单一模型、单一云厂商或单一工作流。
+          它把可控模型路由放在产品核心，同时延续 VS Code 的语言服务、终端、源码管理和扩展生态。
         </p>
       </section>
 
@@ -77,6 +79,10 @@
         <div class="section-heading">
           <p class="eyebrow">Model routing</p>
           <h2 id="models-title">把模型选择权交回给开发者</h2>
+          <p>
+            每个 Nova AI 功能都走当前激活的模型 Profile。团队可以统一走企业网关，个人可以切到本地服务，
+            调试时也能快速验证 base URL、模型 ID、密钥和扩展参数。
+          </p>
         </div>
         <article class="feature-card">
           <div class="feature-icon">01</div>
@@ -93,6 +99,49 @@
           <h3>密钥安全存储</h3>
           <p>API key 通过 VS Code SecretStorage 按模型配置保存，本地模型也可以无密钥运行。</p>
         </article>
+      </section>
+
+      <section class="status-section" aria-labelledby="status-title">
+        <div class="section-heading">
+          <p class="eyebrow">Current milestone</p>
+          <h2 id="status-title">已经接入编码日常的核心能力</h2>
+          <p>
+            当前版本聚焦第一阶段可运行体验：把 Nova AI 作为内置扩展带进 VS Code fork，
+            并让模型配置、规则、上下文和 Agent 任务在侧边栏内闭环。
+          </p>
+        </div>
+        <div class="status-list" aria-label="当前里程碑能力">
+          <article>
+            <span>Chat</span>
+            <strong>流式 AI 聊天</strong>
+            <p>支持 OpenAI-compatible SSE 流式响应，并带有非流式兼容回退。</p>
+          </article>
+          <article>
+            <span>Models</span>
+            <strong>侧边栏模型管理</strong>
+            <p>创建、切换、编辑和测试模型 Profile，不需要反复改配置文件。</p>
+          </article>
+          <article>
+            <span>Rules</span>
+            <strong>Nova / Cursor 规则</strong>
+            <p>读取 <code>.nova/rules.md</code>、<code>.cursorrules</code> 和 <code>.cursor/rules/*</code>，让团队约定进入上下文。</p>
+          </article>
+          <article>
+            <span>Context</span>
+            <strong>轻量仓库检索</strong>
+            <p>根据提示挑选相关源码片段，为聊天、编辑和测试生成补充项目背景。</p>
+          </article>
+          <article>
+            <span>Inline</span>
+            <strong>内联补全</strong>
+            <p>使用当前激活模型，根据光标附近前后缀生成短代码建议。</p>
+          </article>
+          <article>
+            <span>Tasks</span>
+            <strong>Agent 任务记录</strong>
+            <p>重新打开近期计划和运行报告，让 AI 修改过程可追踪、可复盘。</p>
+          </article>
+        </div>
       </section>
 
       <section class="split-section" id="agent" aria-labelledby="agent-title">
@@ -113,7 +162,7 @@
           <div class="workflow-step">
             <span>2</span>
             <strong>生成计划</strong>
-            <p>写入 `.nova/plans/`，先审阅再进入修改。</p>
+            <p>写入 <code>.nova/plans/</code>，先审阅再进入修改。</p>
           </div>
           <div class="workflow-step">
             <span>3</span>
@@ -123,7 +172,7 @@
           <div class="workflow-step">
             <span>4</span>
             <strong>记录结果</strong>
-            <p>运行报告保存到 `.nova/runs/` 方便追踪。</p>
+            <p>运行报告保存到 <code>.nova/runs/</code> 方便追踪。</p>
           </div>
         </div>
       </section>
@@ -132,6 +181,10 @@
         <div class="section-heading">
           <p class="eyebrow">Coding surface</p>
           <h2 id="workflow-title">熟悉的编辑器，内建的 AI 工作台</h2>
+          <p>
+            Nova 不重写开发者已经熟悉的基础设施，而是在编辑器侧边栏里补上 AI 需要的配置、上下文、
+            命令和审阅面板。
+          </p>
         </div>
         <div class="capability-list">
           <article>
@@ -153,11 +206,68 @@
         </div>
       </section>
 
+      <section class="release-section" id="release" aria-labelledby="release-title">
+        <div class="section-heading">
+          <p class="eyebrow">Distribution</p>
+          <h2 id="release-title">从 overlay 到桌面归档</h2>
+          <p>
+            Nova 的工程流保持改动边界清晰：上游 VS Code checkout 固定到已验证版本，Nova 自有改动作为 overlay
+            应用，再通过桌面构建脚本产出跨平台归档。
+          </p>
+        </div>
+        <div class="release-grid">
+          <article>
+            <h3>固定上游版本</h3>
+            <p><code>bootstrap:vscode</code> 默认拉取 Nova CI 使用的 known-good VS Code commit，需要升级时再显式传入 <code>VSCODE_REF</code>。</p>
+          </article>
+          <article>
+            <h3>隔离产品改动</h3>
+            <p><code>apply:overlay</code> 把内置扩展和产品元数据复制进 checkout，让 fork 差异保持清晰可审。</p>
+          </article>
+          <article>
+            <h3>跨平台归档</h3>
+            <p><code>build:vscode-desktop</code> 和 <code>archive:vscode-desktop</code> 面向 macOS Intel、macOS Apple Silicon、Windows 和 Linux。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-title">
+        <div class="section-heading">
+          <p class="eyebrow">Roadmap</p>
+          <h2 id="roadmap-title">下一步：更强的上下文、更完整的 Agent</h2>
+        </div>
+        <div class="timeline" aria-label="Nova 路线图">
+          <article>
+            <span>Phase 1</span>
+            <strong>Fork Foundation</strong>
+            <p>完成 overlay 工作流、内置扩展、模型配置、首启引导和验收测试。</p>
+          </article>
+          <article>
+            <span>Phase 2</span>
+            <strong>AI Core</strong>
+            <p>升级仓库检索、编辑预览、补全体验、规则系统和更多企业模型接入。</p>
+          </article>
+          <article>
+            <span>Phase 3</span>
+            <strong>Agent Workflows</strong>
+            <p>扩展工具执行、终端验证、git 工作流、语义索引和 MCP 配置。</p>
+          </article>
+          <article>
+            <span>Phase 4</span>
+            <strong>Productization</strong>
+            <p>完善品牌、应用 ID、更新通道、安装包和企业策略控制。</p>
+          </article>
+        </div>
+      </section>
+
       <section class="start-section" id="start" aria-labelledby="start-title">
         <div class="section-heading">
           <p class="eyebrow">Run locally</p>
           <h2 id="start-title">从源码启动 Nova</h2>
-          <p>当前项目以 fork overlay 方式开发，先准备依赖，再把 Nova 扩展和产品配置应用到 VS Code checkout。</p>
+          <p>
+            当前项目以 fork overlay 方式开发。先准备依赖和项目本地 Node，再构建内置扩展、拉取 VS Code checkout、
+            应用 Nova overlay，最后启动桌面工作台。
+          </p>
         </div>
         <div class="terminal-card" role="region" aria-label="本地启动命令">
           <div class="terminal-top">
@@ -167,9 +277,12 @@
           </div>
           <pre><code>pnpm install
 pnpm setup:node
+export PATH="$PWD/.tooling/node-v24.17.0-darwin-arm64/bin:$PATH"
+pnpm typecheck
 pnpm build:extension
 pnpm bootstrap:vscode
 pnpm apply:overlay
+pnpm verify:overlay
 pnpm start:vscode -- --disable-gpu</code></pre>
         </div>
       </section>

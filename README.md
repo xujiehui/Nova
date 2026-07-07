@@ -45,6 +45,14 @@ pnpm start:vscode -- --disable-gpu
 ```
 
 `pnpm bootstrap:vscode` creates `vendor/vscode` from upstream VS Code. `pnpm apply:overlay` builds the Nova extension and copies Nova files into that checkout.
+By default the VS Code checkout is pinned to the known-good upstream commit used by Nova's CI. Override it with `VSCODE_REF=<commit-or-ref>` when intentionally updating upstream.
+
+The desktop release workflow builds distributable Nova desktop archives for macOS Intel, macOS Apple Silicon, Windows, and Linux through GitHub Actions:
+
+```bash
+pnpm build:vscode-desktop
+pnpm archive:vscode-desktop
+```
 
 If `npm` is not available on PATH but can be launched another way, pass it explicitly:
 
@@ -99,6 +107,14 @@ pnpm website:dev
 ```
 
 Then open `http://localhost:4173/website/`.
+
+Build the GitHub Pages artifact locally with:
+
+```bash
+pnpm website:build
+```
+
+The build output is written to `dist/website`. The `GitHub Pages` workflow builds that artifact on pushes to `main` that touch website-related files, uploads it with `actions/upload-pages-artifact`, and deploys it with `actions/deploy-pages`.
 
 ## Inline Completion
 
