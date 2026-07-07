@@ -100,6 +100,14 @@ pnpm website:dev
 
 Then open `http://localhost:4173/website/`.
 
+Build the GitHub Pages artifact locally with:
+
+```bash
+pnpm website:build
+```
+
+The build output is written to `dist/website`. The `GitHub Pages` workflow builds that artifact on pushes to `main` that touch website-related files, uploads it with `actions/upload-pages-artifact`, and deploys it with `actions/deploy-pages`.
+
 ## Inline Completion
 
 Nova registers an inline completion provider that uses the active model profile. It sends a bounded prefix/suffix around the cursor and expects the model to return only the insertion text. Toggle it with `nova.inlineCompletion.enabled`.

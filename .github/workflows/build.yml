@@ -37,3 +37,6 @@ jobs:
 
       - name: Build Nova extension
         run: pnpm build:extension
+
+      - name: Build website
+        run: pnpm website:build
