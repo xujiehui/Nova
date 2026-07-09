@@ -12,6 +12,8 @@
     "check:vscode-env": "tsx scripts/check-vscode-env.ts",
     "install:vscode-deps": "tsx scripts/install-vscode-deps.ts",
     "build:vscode-fast": "tsx scripts/build-vscode-fast.ts",
+    "build:vscode-desktop": "tsx scripts/build-vscode-desktop.ts",
+    "archive:vscode-desktop": "tsx scripts/archive-vscode-desktop.ts",
     "start:vscode": "tsx scripts/start-vscode.ts",
     "smoke:vscode-start": "tsx scripts/smoke-vscode-start.ts",
     "acceptance:vscode-model": "tsx scripts/acceptance-vscode-model.ts",

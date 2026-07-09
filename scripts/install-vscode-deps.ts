@@ -49,6 +49,7 @@ if (!fs.existsSync(path.join(vscodeDir, "package-lock.json"))) {
 }
 
 const npmExecutable = process.env.NPM_EXECUTABLE ?? "npm";
+const installCommand = process.env.VSCODE_NPM_INSTALL_COMMAND ?? (process.env.CI ? "ci" : "install");
 
 if (!hasCommand(npmExecutable)) {
   console.error(
@@ -57,8 +58,20 @@ if (!hasCommand(npmExecutable)) {
   process.exit(1);
 }
 
+if (process.platform === "linux") {
+  run("bash", [
+    "-lc",
+    [
+      "source ./build/azure-pipelines/linux/setup-env.sh",
+      `npm_command=${installCommand} node build/npm/preinstall.ts`,
+      `${npmExecutable} ${installCommand}`
+    ].join(" && ")
+  ], vscodeDir);
+  process.exit(0);
+}
+
 if (npmExecutable.includes(" ")) {
-  runCommandLine(`${npmExecutable} install`, vscodeDir);
+  runCommandLine(`${npmExecutable} ${installCommand}`, vscodeDir);
 } else {
-  run(npmExecutable, ["install"], vscodeDir);
+  run(npmExecutable, [installCommand], vscodeDir);
 }

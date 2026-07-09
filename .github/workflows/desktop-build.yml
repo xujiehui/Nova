@@ -1,0 +1,141 @@
+name: Desktop Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    paths:
+      - ".github/workflows/desktop-build.yml"
+      - "scripts/bootstrap-vscode.ts"
+      - "scripts/install-vscode-deps.ts"
+      - "scripts/build-vscode-desktop.ts"
+      - "scripts/archive-vscode-desktop.ts"
+      - "extensions/nova-ai/**"
+      - "overlays/vscode/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS Intel
+            runner: macos-26-intel
+            platform: darwin
+            arch: x64
+            artifact: Nova-darwin-x64
+            artifact_file: Nova-darwin-x64.zip
+          - name: macOS Apple Silicon
+            runner: macos-26
+            platform: darwin
+            arch: arm64
+            artifact: Nova-darwin-arm64
+            artifact_file: Nova-darwin-arm64.zip
+          - name: Windows
+            runner: windows-2022
+            platform: win32
+            arch: x64
+            artifact: Nova-win32-x64
+            artifact_file: Nova-win32-x64.zip
+          - name: Linux
+            runner: ubuntu-latest
+            platform: linux
+            arch: x64
+            artifact: Nova-linux-x64
+            artifact_file: Nova-linux-x64.tar.gz
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.17.0
+          cache: pnpm
+
+      - name: Install Linux packages
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libkrb5-dev \
+            libxkbfile-dev \
+            pkg-config \
+            rpm
+
+      - name: Locate Visual Studio
+        if: matrix.platform == 'win32'
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -version "[17.0,18.0)" -property installationPath
+          if (-not $vs) {
+            $vs = & $vswhere -latest -property installationPath
+          }
+          if (-not $vs) {
+            throw "Visual Studio installation was not found."
+          }
+          "vs2022_install=$vs" >> $env:GITHUB_ENV
+
+      - name: Install Nova dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck Nova scripts and extension
+        run: pnpm test
+
+      - name: Bootstrap VS Code source
+        run: pnpm bootstrap:vscode
+
+      - name: Apply Nova overlay
+        run: pnpm apply:overlay
+
+      - name: Install VS Code dependencies
+        run: pnpm install:vscode-deps
+        env:
+          VSCODE_ARCH: ${{ matrix.arch }}
+          VSCODE_NPM_INSTALL_COMMAND: ci
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Build Nova desktop app
+        run: pnpm build:vscode-desktop
+        env:
+          VSCODE_PLATFORM: ${{ matrix.platform }}
+          VSCODE_ARCH: ${{ matrix.arch }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Archive Nova desktop app
+        run: pnpm archive:vscode-desktop
+        env:
+          VSCODE_PLATFORM: ${{ matrix.platform }}
+          VSCODE_ARCH: ${{ matrix.arch }}
+
+      - name: Upload desktop artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: artifacts/desktop/${{ matrix.artifact_file }}
+          if-no-files-found: error

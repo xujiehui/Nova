@@ -14,6 +14,8 @@ By default this clones `https://github.com/microsoft/vscode.git` into `vendor/vs
 VSCODE_REPO=https://github.com/your-org/vscode.git VSCODE_DIR=vendor/vscode pnpm bootstrap:vscode
 ```
 
+The default checkout is pinned to Nova's known-good upstream VS Code commit. Set `VSCODE_REF=<commit-or-ref>` when intentionally moving the fork forward.
+
 ## 2. Apply Nova Overlay
 
 Run:
@@ -88,9 +90,13 @@ From the Nova overlay repository, use:
 
 ```bash
 pnpm build:vscode-fast
+pnpm build:vscode-desktop
+pnpm archive:vscode-desktop
 pnpm smoke:vscode-start
 pnpm start:vscode -- --disable-gpu
 ```
+
+`pnpm build:vscode-desktop` runs the upstream `core-ci` and `vscode-<platform>-<arch>-min-ci` tasks for the selected target. Set `VSCODE_PLATFORM` and `VSCODE_ARCH` to build a different target in CI. `pnpm archive:vscode-desktop` creates the uploadable desktop archive under `artifacts/desktop/` and verifies that the bundled app contains the Nova AI extension.
 
 ## 5. Nova AI Settings
 
